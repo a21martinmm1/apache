@@ -1,0 +1,39 @@
+services:
+  # web1:
+  #   image: httpd:2.4
+  #   ports:
+  #     - 8081:80
+  # web2:
+  #   image: bitnami/apache
+  #   ports:
+  #     - 8080:8080
+  web3:
+    build: apacheserver
+    ports:
+      - 80:80
+    volumes:
+      - ./apacheserver/martin.lan:/opt/web/martin.lan
+      - ./apacheserver/sites-enabled/martin.lan.conf:/etc/apache2/sites-enabled/martin.lan.conf
+    networks:
+      redeapache:
+        aliases:
+          - martin.lan
+          - www.martin.lan
+          - eq1.martin.lan
+    develop:
+      watch:
+        - path: ./apacheserver/sites-enabled/test1.conf
+          action: restart
+  
+  cliente:
+    build: cliente
+    hostname: cliente
+    networks:
+      - redeapache
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+networks:
+  redeapache:        
