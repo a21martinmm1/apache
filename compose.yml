@@ -9,6 +9,7 @@ services:
   #     - 8080:8080
   web3:
     build: apacheserver
+    hostname: apacheserver
     ports:
       - 80:80
     volumes:
@@ -22,7 +23,7 @@ services:
           - eq1.martin.lan
     develop:
       watch:
-        - path: ./apacheserver/sites-enabled/test1.conf
+        - path: ./apacheserver/sites-enabled/martin.lan
           action: restart
   
   cliente:
