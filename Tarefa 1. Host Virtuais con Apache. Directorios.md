@@ -46,27 +46,56 @@ Accedendo a /33/yy danos erro de permisos, posto que no directorio /33 non podem
 
 ## Indica como farías, sen alterar o sistema de ficheiros, para que cando accedamos a http://www.exemplo.lan/datos se acceda ao contido que exista dentro de /opt/web/exemplo.lan/datos. Amosa tamén unta captura de pantalla da URL anterior.
 
-Para acceder a /datos sen alterar o sistema de ficheiros
+Para acceder a /datos sen alterar o sistema de ficheiros, debemos crear un alias da ruta local e darlle permisos para acceder a dita ruta local dentro do host virtual:
 
+![resultado exercicio4.1](./imaxes/exercicio4.1.png)
+
+![resultado exercicio4.2](./imaxes/exercicio4.2.png)
 
 ## No directorio 50 (dentro da raíz de documentos), tamén queremos habilitar o traballo con ficheiros .htaccess, pero so queremos habilitar as opcións mínimas necesarias para facer o seguinte dentro dese directorio:
+- A orde de ficheiros a buscar debe ser un.html, dous.html e tres.html nesa orde, e no subdirectorio abc que está dentro de 50 a orde será tres.html, dous.html e un.html
+- No subdirectorio segredo non está permitido o acceso.
+- No subdirectorio imaxes queremos habilitar a opción para que cando non existan os ficheiros de procura se amose un listado co contido do directorio.
+- No caso de que se poña unha directiva non permitida, trataranse as directivas non permitidas coma non fatais
 
+![resultado exercicio5.1](./imaxes/exercicio5.1.png)
 
+![resultado exercicio5.2](./imaxes/exercicio5.2.png)
 
-## A orde de ficheiros a buscar debe ser un.html, dous.html e tres.html nesa orde, e no subdirectorio abc que está dentro de 50 a orde será tres.html, dous.html e un.html
+![resultado exercicio5.3](./imaxes/exercicio5.3.png)
 
-## No subdirectorio segredo non está permitido o acceso.
+![resultado exercicio5.4](./imaxes/exercicio5.4.png)
 
-## No subdirectorio imaxes queremos habilitar a opción para que cando non existan os ficheiros de procura se amose un listado co contido do directorio.
-
-## No caso de que se poña unha directiva non permitida, trataranse as directivas non permitidas coma non fatais
+![resultado exercicio5.5](./imaxes/exercicio5.5.png)
 
 ## Indica os cambios que habería que facer para non ter que poñer de forma explícita unha sección <Directory> para o mesmo directorio indicado pola directiva DocumentRoot, se todos os host virtuais estivesen aloxados dentro de /opt/web
+
+Os cambios que habería que facer son os seguintes: engadir a directiva <Directory> para o directorio /opt/web a nivel de server config (no arquivo /etc/apache2/apache2.conf) coa opción "Require all granted" para permitir a todos os virtual host de dito directorio (similar a como está configurado para /var/www)
+
 ## No mesmo suposto que esta tarefa, que pasaría se a directiva DirectoryIndex estivese dentro do directorio indicado coa directiva DocumentRoot?
+
+Os sitios da carpeta htdocs seguirían funcionando igual, sen embargo, os sitios da carpeta datos xa non funcionarían
+
+![exercicio6.1.png](./imaxes/exercicio6.1.png)
+
+![exercicio6.1.png](./imaxes/exercicio6.2.png)
 
 ## Que pasa se poñemos un ficheiro .htaccess no directorio do DocumentRoot?
 
+Non pasaría nada se poñemos un ficheiro .htaccess no directorio do DocumentRoot, posto que a directiva AllowOverride ten o valor None para o directorio /
+
 ## Que pasaría se no directorio 50 non existisen os ficheiros un.html, dous.html e tres.html
+
+Se no directorio 50 non existisen os ficheiros un.html, dous.html e tres.html, daría un erro de Forbidden, posto que non existe ningún dos arquivos indicados na directiva DirectoryIndex e non temos a opción Indexes habilitada para listar os elementos do directorio
+
 ## Que pasaría se nun ficheiro .htaccess no directorio 50 se introduce unha directiva non permitida, coma por exemplo ErrorDocument?.
 
+Ao ser unha directiva prohibida, o servidor trataríaa como non fatal, posto que así o indicamos coa opción Nonfatal=Override da directiva AllowOverride
+
 ## Como farías para configurar os 4 primeiros puntos con ficheiros .htaccess. Amosa a configuración resultante do host virtual, e o contido e localización dos ficheiros .htaccess
+
+Arquivo de configuración do host virtual:
+![exercicio7.1.png](./imaxes/exercicio7.1.png)
+
+Arquivos .htaccess:
+![exercicio7.2.png](./imaxes/exercicio7.2.png)
