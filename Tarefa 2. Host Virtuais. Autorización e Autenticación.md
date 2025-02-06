@@ -61,8 +61,11 @@ Para facer iso, deberíamos engadir a seguinte directiva no arquivo de configura
 
     <Directory /opt/web/omeusitio.lan/htdocs/secure>
         <RequireAll>
-            Require ip 172.16
-            Require host apache.lan
+            Require all granted
+            <RequireNone>
+                Require ip 172.16
+                Require host apache.lan
+            </RequireNone>
         </RequireAll>
     </Directory>
 
