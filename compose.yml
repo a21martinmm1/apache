@@ -15,12 +15,16 @@ services:
     volumes:
       - ./apacheserver/martin.lan:/opt/web/martin.lan
       - ./apacheserver/sites-enabled/martin.lan.conf:/etc/apache2/sites-enabled/martin.lan.conf
+      - ./apacheserver/omeusitio.lan:/opt/web/omeusitio.lan
+      - ./apacheserver/sites-enabled/omeusitio.lan.conf:/etc/apache2/sites-enabled/omeusitio.lan.conf
     networks:
       redeapache:
         aliases:
           - martin.lan
           - www.martin.lan
           - eq1.martin.lan
+          - omeusitio.lan
+          - www.omeusitio.lan
     develop:
       watch:
         - path: ./apacheserver/sites-enabled/martin.lan
@@ -37,4 +41,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
 
 networks:
-  redeapache:        
+  redeapache:
+    ipam:
+        config:
+          - subnet: 192.168.58.128/25

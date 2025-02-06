@@ -6,6 +6,10 @@ RUN apt install -y rsyslog apache2
 
 RUN apt clean && rm -rf /var/lib/apt/list/*
 
+RUN a2enmod auth_digest.load
+
+RUN a2enmod authz_groupfile.load
+
 EXPOSE 80
 
 CMD ["apachectl", "-D", "FOREGROUND"]

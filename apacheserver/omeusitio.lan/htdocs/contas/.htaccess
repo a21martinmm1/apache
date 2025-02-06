@@ -1,0 +1,13 @@
+AuthType Basic
+AuthName "Acceso restrinxido"
+AuthBasicProvider file
+AuthUserFile "/opt/web/omeusitio.lan/.htpasswordscontas"
+AuthGroupFile "/opt/web/omeusitio.lan/.htgroupscontas"
+<RequireAny>
+    Require user manolo
+    <RequireAll>
+        Require group directivos
+        Require group accionistas
+        Require not group temporais
+    </RequireAll>
+</RequireAny>
