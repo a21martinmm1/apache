@@ -18,6 +18,8 @@ RUN mkdir /var/log/apache2/omeusitio.lan
 
 RUN chmod 777 /var/log/apache2/omeusitio.lan
 
+RUN a2enmod rewrite
+
 EXPOSE 80
 
 CMD ["apachectl", "-D", "FOREGROUND"]
