@@ -12,8 +12,6 @@ RUN a2enmod authz_groupfile.load
 
 RUN a2enmod ssl
 
-RUN a2enmod log_debug
-
 RUN mkdir /var/log/apache2/omeusitio.lan
 
 RUN chmod 777 /var/log/apache2/omeusitio.lan
