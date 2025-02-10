@@ -10,6 +10,8 @@ RUN a2enmod auth_digest.load
 
 RUN a2enmod authz_groupfile.load
 
+RUN a2enmod ssl
+
 EXPOSE 80
 
 CMD ["apachectl", "-D", "FOREGROUND"]

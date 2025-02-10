@@ -17,6 +17,11 @@ services:
       - ./apacheserver/sites-enabled/martin.lan.conf:/etc/apache2/sites-enabled/martin.lan.conf
       - ./apacheserver/omeusitio.lan:/opt/web/omeusitio.lan
       - ./apacheserver/sites-enabled/omeusitio.lan.conf:/etc/apache2/sites-enabled/omeusitio.lan.conf
+      - ./apacheserver/novositio.lan:/opt/web/novositio.lan
+      - ./apacheserver/sites-enabled/novositio.lan.conf:/etc/apache2/sites-enabled/novositio.lan.conf
+      - ./apacheserver/sites-enabled/novositio.lan.ssl.conf:/etc/apache2/sites-enabled/novositio.lan.ssl.conf
+      - ./apacheserver/ssl/novositio.lan.key:/etc/ssl/private/novositio.lan.key
+      - ./apacheserver/ssl/novositio.lan.pem:/etc/ssl/certs/novositio.lan.pem
     networks:
       redeapache:
         aliases:
@@ -25,6 +30,8 @@ services:
           - eq1.martin.lan
           - omeusitio.lan
           - www.omeusitio.lan
+          - novositio.lan
+          - www.novositio.lan
     develop:
       watch:
         - path: ./apacheserver/sites-enabled/martin.lan
