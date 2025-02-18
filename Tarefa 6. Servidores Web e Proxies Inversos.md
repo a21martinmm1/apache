@@ -22,7 +22,7 @@
 
 ## Código do ficheiro index.php (Deberás ter instalados os paquetes libapache2-mod-php php)
 
-<html>
+```<html>
 <head>
     <title><?php echo "Sitio Web #1 en ${_SERVER['SERVER_ADDR']}"?></title>
 </head>
