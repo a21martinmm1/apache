@@ -2,7 +2,7 @@ FROM debian:12
 
 RUN apt update && apt install -y net-tools procps most iproute2  iputils-ping whois
 
-RUN apt install -y rsyslog apache2
+RUN apt install -y rsyslog apache2 libapache2-mod-php php
 
 RUN apt clean && rm -rf /var/lib/apt/list/*
 

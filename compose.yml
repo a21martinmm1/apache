@@ -1,47 +1,86 @@
 services:
-  # web1:
-  #   image: httpd:2.4
-  #   ports:
-  #     - 8081:80
-  # web2:
-  #   image: bitnami/apache
-  #   ports:
-  #     - 8080:8080
-  web:
+  web1:
     build: apacheserver
-    hostname: apacheserver
-    ports:
-      - 80:80
+    hostname: apacheserver1
+    # ports:
+    #   - 80:80
     volumes:
-      - ./apacheserver/martin.lan:/opt/web/martin.lan
-      - ./apacheserver/sites-enabled/martin.lan.conf:/etc/apache2/sites-enabled/martin.lan.conf
-      - ./apacheserver/omeusitio.lan:/opt/web/omeusitio.lan
-      - ./apacheserver/sites-enabled/omeusitio.lan.conf:/etc/apache2/sites-enabled/omeusitio.lan.conf
-      - ./apacheserver/novositio.lan:/opt/web/novositio.lan
-      - ./apacheserver/sites-enabled/novositio.lan.conf:/etc/apache2/sites-enabled/novositio.lan.conf
-      - ./apacheserver/sites-enabled/novositio.lan.ssl.conf:/etc/apache2/sites-enabled/novositio.lan.ssl.conf
-      - ./apacheserver/ssl/novositio.lan.key:/etc/ssl/private/novositio.lan.key
-      - ./apacheserver/ssl/novositio.lan.pem:/etc/ssl/certs/novositio.lan.pem
+      # - ./apacheserver/martin.lan:/opt/web/martin.lan
+      # - ./apacheserver/sites-enabled/martin.lan.conf:/etc/apache2/sites-enabled/martin.lan.conf
+      # - ./apacheserver/omeusitio.lan:/opt/web/omeusitio.lan
+      # - ./apacheserver/sites-enabled/omeusitio.lan.conf:/etc/apache2/sites-enabled/omeusitio.lan.conf
+      # - ./apacheserver/novositio.lan:/opt/web/novositio.lan
+      # - ./apacheserver/sites-enabled/novositio.lan.conf:/etc/apache2/sites-enabled/novositio.lan.conf
+      # - ./apacheserver/sites-enabled/novositio.lan.ssl.conf:/etc/apache2/sites-enabled/novositio.lan.ssl.conf
+      # - ./apacheserver/ssl/novositio.lan.key:/etc/ssl/private/novositio.lan.key
+      # - ./apacheserver/ssl/novositio.lan.pem:/etc/ssl/certs/novositio.lan.pem
+      - ./apacheserver/sitio.lan:/opt/web/sitio.lan
+      - ./apacheserver/sites-enabled/sitio.lan.conf:/etc/apache2/sites-enabled/sitio.lan.conf
+
     networks:
       redeapache:
+        # aliases:
+        #   - martin.lan
+        #   - www.martin.lan
+        #   - eq1.martin.lan
+        #   - omeusitio.lan
+        #   - www.omeusitio.lan
+        #   - novositio.lan
+        #   - www.novositio.lan
+        # - sitio.lan
+        # - www.sitio.lan
+  
+  web2:
+    build: apacheserver
+    hostname: apacheserver2
+    # ports:
+    #   - 80:80
+    volumes:
+      # - ./apacheserver/martin.lan:/opt/web/martin.lan
+      # - ./apacheserver/sites-enabled/martin.lan.conf:/etc/apache2/sites-enabled/martin.lan.conf
+      # - ./apacheserver/omeusitio.lan:/opt/web/omeusitio.lan
+      # - ./apacheserver/sites-enabled/omeusitio.lan.conf:/etc/apache2/sites-enabled/omeusitio.lan.conf
+      # - ./apacheserver/novositio.lan:/opt/web/novositio.lan
+      # - ./apacheserver/sites-enabled/novositio.lan.conf:/etc/apache2/sites-enabled/novositio.lan.conf
+      # - ./apacheserver/sites-enabled/novositio.lan.ssl.conf:/etc/apache2/sites-enabled/novositio.lan.ssl.conf
+      # - ./apacheserver/ssl/novositio.lan.key:/etc/ssl/private/novositio.lan.key
+      # - ./apacheserver/ssl/novositio.lan.pem:/etc/ssl/certs/novositio.lan.pem
+      - ./apacheserver/sitio.lan:/opt/web/sitio.lan
+      - ./apacheserver/sites-enabled/sitio.lan.conf:/etc/apache2/sites-enabled/sitio.lan.conf
+
+    networks:
+      redeapache:
+        # aliases:
+        #   - martin.lan
+        #   - www.martin.lan
+        #   - eq1.martin.lan
+        #   - omeusitio.lan
+        #   - www.omeusitio.lan
+        #   - novositio.lan
+        #   - www.novositio.lan
+        # - sitio.lan
+        # - www.sitio.lan
+  
+  nginx1:
+    build: nginxserver
+    hostname: frontend
+    ports:
+      - 80:80
+    networks:
+      redeapache:
+      redeclientes:
         aliases:
-          - martin.lan
-          - www.martin.lan
-          - eq1.martin.lan
-          - omeusitio.lan
-          - www.omeusitio.lan
-          - novositio.lan
-          - www.novositio.lan
-    develop:
-      watch:
-        - path: ./apacheserver/sites-enabled/martin.lan
-          action: restart
+          - sitio.lan
+          - www.sitio.lan
+        
+    volumes:
+      - ./nginxserver/sites-enabled/sitio.lan.conf:/etc/nginx/sites-enabled/sitio.lan.conf
   
   cliente:
     build: cliente
     hostname: cliente
     networks:
-      - redeapache
+      - redeclientes
     environment:
       - DISPLAY=${DISPLAY}
     volumes:
@@ -51,4 +90,9 @@ networks:
   redeapache:
     ipam:
         config:
-          - subnet: 192.168.58.128/25
+          - subnet: 192.168.58.0/24
+  redeclientes:
+    ipam:
+        config:
+          - subnet: 192.168.56.0/24
+            gateway: 192.168.56.45
