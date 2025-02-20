@@ -74,7 +74,7 @@ services:
           - www.sitio.lan
         
     volumes:
-      - ./nginxserver/sites-enabled/sitio.lan.conf:/etc/nginx/sites-enabled/sitio.lan.conf
+      - ./nginxserver/conf/sitio.lan.conf:/etc/nginx/conf.d/sitio.lan.conf
   
   cliente:
     build: cliente
